@@ -1,8 +1,14 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const File = require('./model/file');
 
 const app = express();
 
-app.listen(3000);
+const dbUrl = 
+mongoose.connect(dbUrl)
+.then((res) => app.listen(3000))
+.catch(e => console.log(e));
+
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
