@@ -1,9 +1,5 @@
 const mongoose = require('mongoose');
 const User = require('./model/user');
-const Course = require('./model/course');
-const Folder = require('./model/folder');
-const File = require('./model/file');
-const { json } = require('express');
 require('dotenv').config();
 
 // test("https://canvas.nus.edu.sg/api/v1/courses", options);
@@ -23,11 +19,11 @@ async function init() {
     // getting courses for each user
     const courses = [];
 
-    const user = new User({
-        canvas_api_key: process.env.CANVAS_API_KEY,
-        courses: await User.update()
-    })
-
-    console.log('all done!');
-    user.save();
+    let user = await User.findOne({canvas_api_key: process.env.CANVAS_API_KEY}).exec();
+    if (user === null) {
+        user = new User({
+            canvas_api_key: process.env.CANVAS_API_KEY,
+        })
+    }
+    await user.updateUserCourses();
 }

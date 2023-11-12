@@ -1,31 +1,45 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Folder = require('./folder');
-const options = require('../utils/constants').HTML_OPTIONS;
 
 const courseSchema = new Schema({
+    _id: Number,
     course_name: {
         type: String,
     },
-    folders: [Folder.schema]
+    folders: [{
+        type: Number,
+        ref: 'Folder',
+        default: [],
+    }]
 })
 
-courseSchema.statics.update = async function update(folderPath) {
+courseSchema.methods.updateCourseFolders = async function(folderPath, options) {
     const jsonObj = await fetch(new Request(folderPath, options))
         .then(res => {return res.json()})
         .catch(e => console.log(e));
 
-    const folders = [];
     for (let i = 0; i < jsonObj.length; i++) {
         const subJson = jsonObj[i];
         filePath = subJson.files_url;
-        folders.push(new Folder({
-            folder_name: subJson.name,
-            files: await Folder.update(filePath)
-        }));
+
+        const idx = this.folders.findIndex(e => e == subJson.id); 
+
+        let folder;
+        if (idx === -1) {
+            folder = new Folder({
+                _id: subJson.id,
+                folder_name: subJson.name,
+            });
+            this.folders.push(folder._id);
+        } else {
+            folder = await Folder.findById(this.folders[idx]).exec();
+        }
+        folder.updateFolderFiles(filePath, options)
+            .catch(e => console.log('dup folder: ' + folder.folder_name));
     }
-    console.log('folders filled');
-    return folders;
+    await this.save();
+    // console.log('[Course] ' + this.course_name + ' updated');
 }
 
 const Course = mongoose.model('Course', courseSchema);
