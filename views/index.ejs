@@ -3,5 +3,14 @@
     <body>
         <%- include('./partials/nav.ejs') %>
         <h1>CloudCanvas</h1>
+        <ul>
+            <% for (let i = 0; i < courses.length; i++) { %>
+                <li>
+                    <h4>
+                        <a href='/course'><%= courses[i].course_name %></a>
+                    </h4>
+                </li>
+            <% } %>
+        </ul>
     </body>
 </html>
