@@ -16,9 +16,6 @@ init().catch(e => console.log(e));
 async function init() {
     await mongoose.connect(process.env.DB_URL);
 
-    // getting courses for each user
-    const courses = [];
-
     let user = await User.findOne({canvas_api_key: process.env.CANVAS_API_KEY}).exec();
     if (user === null) {
         user = new User({

@@ -3,12 +3,12 @@
     <body>
         <%- include('./partials/nav.ejs') %>
         <h1>CloudCanvas</h1>
-        <h4><%= course_name %></h4>
+        <h4><%= folder_name %></h4>
         <ul>
-            <% for (let i = 0; i < folders.length; i++) { %>
+            <% for (let i = 0; i < files.length; i++) { %>
                 <li>
                     <h4>
-                        <a href=<%= 'folder/' + folders[i]._id %>><%= folders[i].folder_name %></a>
+                        <a href=<%= files[i].url %>><%= files[i].file_name %></a>
                     </h4>
                 </li>
             <% } %>
