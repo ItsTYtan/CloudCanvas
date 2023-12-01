@@ -7,7 +7,7 @@
             <% for (let i = 0; i < courses.length; i++) { %>
                 <li>
                     <h4>
-                        <a href='/course'><%= courses[i].course_name %></a>
+                        <a href=<%= 'course/' + courses[i]._id %>><%= courses[i].course_name %></a>
                     </h4>
                 </li>
             <% } %>
