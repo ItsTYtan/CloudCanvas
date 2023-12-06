@@ -1,15 +1,26 @@
 <html lang-="en">
     <%- include('./partials/head.ejs') %>
     <body>
-        <%- include('./partials/nav.ejs') %>
-        <h1>CloudCanvas</h1>
+        <nav>
+            <a class="nav-button" style="background-color:#ffb68e" href="/">
+                <img src="/images/file-icon.png" alt="file-icon">
+                <p class="label-small">Your Files</p>
+            </a>
+            <a class="nav-button">
+                <img src="/images/settings-icon.png" alt="settings-icon">
+                <p class="label-small">Settings</p>
+            </a>
+        </nav>
         <h4><%= course_name %></h4>
-        <ul>
+        <ul class="documents-list">
             <% for (let i = 0; i < folders.length; i++) { %>
                 <li>
-                    <h4>
-                        <a href=<%= 'folder/' + folders[i]._id %>><%= folders[i].folder_name %></a>
-                    </h4>
+                    <div class="couse-file">
+                        <a href=<%= 'folder/' + folders[i]._id %>>
+                            <img src="/images/file-orange.png">
+                            <p class="label-medium"><%= folders[i].folder_name %></p>
+                        </a>
+                    </div>
                 </li>
             <% } %>
         </ul>
