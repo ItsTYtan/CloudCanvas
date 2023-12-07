@@ -11,14 +11,19 @@
                 <p class="label-small">Settings</p>
             </a>
         </nav>
-        <h1 class="heading">Courses</h1>
+        <div class="top-bar">
+            <p class="heading">CloudCanvas</p>
+        </div>
         <section class="documents-list">
-            <% for (let i = 0; i < courses.length; i++) { %>
-                <a class='document' href=<%= 'course/' + courses[i]._id %>>
-                    <img src="/images/file-orange.png">
-                    <h4><%= courses[i].course_name %></h4>
-                </a>
-            <% } %>
+            <p class="heading" style="margin-bottom: 16px;">Courses</p>
+            <div class="flex-row">
+                <% for (let i = 0; i < courses.length; i++) { %>
+                    <a class='document' href=<%= 'course/' + courses[i]._id %>>
+                        <img src="/images/file-orange.png">
+                        <p class="label-small center"><%= courses[i].course_name %></p>
+                    </a>
+                <% } %>
+            </div>
         </section>
     </body>
 </html>
